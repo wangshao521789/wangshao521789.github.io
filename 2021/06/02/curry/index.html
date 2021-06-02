@@ -71,9 +71,13 @@
 <p>翻译成中文：</p>
 <p>在数学和计算机科学中，柯里化是一种将使用多个参数的一个函数转换成一系列使用一个参数的函数的技术。</p>
 <p>举个例子：</p>
-<p>(```)<br>  function add(a, b) {<br>    return a + b;<br>}</p>
-<p>// 执行 add 函数，一次传入两个参数即可<br>add(1, 2) // 3</p>
-<p>// 假设有一个 curry 函数可以做到柯里化<br>var addCurry = curry(add);<br>addCurry(1)(2) // 3<br>(```)</p>
+<p>(```)<br>  function add(a, b) {<br>    return a + b;<br>    }</p>
+<pre><code>// 执行 add 函数，一次传入两个参数即可
+add(1, 2) // 3
+
+// 假设有一个 curry 函数可以做到柯里化
+var addCurry = curry(add);
+addCurry(1)(2) // 3</code></pre><p>(```)</p>
 <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><hr>
 <p>我们会讲到如何写出这个 curry 函数，并且会将这个 curry 函数写的很强大，但是在编写之前，我们需要知道柯里化到底有什么用？</p>
 <p>举个例子：</p>
@@ -119,23 +123,11 @@ var curry = function (fn) {
 <p>var addCurry = curry(add, 1, 2);<br>addCurry() // 3<br>//或者<br>var addCurry = curry(add, 1);<br>addCurry(2) // 3<br>//或者<br>var addCurry = curry(add);<br>addCurry(1, 2) // 3<br>(```)</p>
 <p>已经有柯里化的感觉了，但是还没有达到要求，不过我们可以把这个函数用作辅助函数，帮助我们写真正的 curry 函数。</p>
 <h2 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h2><p>// 第二版</p>
-<p>(```)<br>function sub_curry(fn) {<br>    var args = [].slice.call(arguments, 1);<br>    return function() {<br>        return fn.apply(this, args.concat([].slice.call(arguments)));<br>    };<br>}</p>
-<p>function curry(fn, length) {</p>
-<pre><code>length = length || fn.length;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function sub_curry(fn) &#123;</span><br><span class="line">    var args &#x3D; [].slice.call(arguments, 1);</span><br><span class="line">    return function() &#123;</span><br><span class="line">        return fn.apply(this, args.concat([].slice.call(arguments)));</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function curry(fn, length) &#123;</span><br><span class="line"></span><br><span class="line">    length &#x3D; length || fn.length;</span><br><span class="line"></span><br><span class="line">    var slice &#x3D; Array.prototype.slice;</span><br><span class="line"></span><br><span class="line">    return function() &#123;</span><br><span class="line">        if (arguments.length &lt; length) &#123;</span><br><span class="line">            var combined &#x3D; [fn].concat(slice.call(arguments));</span><br><span class="line">            return curry(sub_curry.apply(this, combined), length - arguments.length);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return fn.apply(this, arguments);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-var slice = Array.prototype.slice;
-
-return function() {
-    if (arguments.length &lt; length) {
-        var combined = [fn].concat(slice.call(arguments));
-        return curry(sub_curry.apply(this, combined), length - arguments.length);
-    } else {
-        return fn.apply(this, arguments);
-    }
-};</code></pre><p>}<br>(```)</p>
 <p>我们验证下这个函数：</p>
-<p>(```)<br>var fn = curry(function(a, b, c) {<br>    return [a, b, c];<br>});</p>
-<p>fn(“a”, “b”, “c”) // [“a”, “b”, “c”]<br>fn(“a”, “b”)(“c”) // [“a”, “b”, “c”]<br>fn(“a”)(“b”)(“c”) // [“a”, “b”, “c”]<br>fn(“a”)(“b”, “c”) // [“a”, “b”, “c”]<br>(```)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var fn &#x3D; curry(function(a, b, c) &#123;</span><br><span class="line">    return [a, b, c];</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">fn(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;) &#x2F;&#x2F; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span><br><span class="line">fn(&quot;a&quot;, &quot;b&quot;)(&quot;c&quot;) &#x2F;&#x2F; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span><br><span class="line">fn(&quot;a&quot;)(&quot;b&quot;)(&quot;c&quot;) &#x2F;&#x2F; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span><br><span class="line">fn(&quot;a&quot;)(&quot;b&quot;, &quot;c&quot;) &#x2F;&#x2F; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span><br></pre></td></tr></table></figure>
+
 <p>效果已经达到我们的预期，然而这个 curry 函数的实现好难理解呐……</p>
 <p>为了让大家更好的理解这个 curry 函数，我给大家写个极简版的代码：</p>
 <p>(```)<br>function sub_curry(fn){<br>    return function(){<br>        return fn()<br>    }<br>}</p>
