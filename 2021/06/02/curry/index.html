@@ -71,13 +71,8 @@
 <p>翻译成中文：</p>
 <p>在数学和计算机科学中，柯里化是一种将使用多个参数的一个函数转换成一系列使用一个参数的函数的技术。</p>
 <p>举个例子：</p>
-<p>(```)<br>  function add(a, b) {<br>    return a + b;<br>    }</p>
-<pre><code>// 执行 add 函数，一次传入两个参数即可
-add(1, 2) // 3
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function add(a, b) &#123;</span><br><span class="line">  return a + b;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 执行 add 函数，一次传入两个参数即可</span><br><span class="line">  add(1, 2) &#x2F;&#x2F; 3</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 假设有一个 curry 函数可以做到柯里化</span><br><span class="line">  var addCurry &#x3D; curry(add);</span><br><span class="line">  addCurry(1)(2) &#x2F;&#x2F; 3</span><br></pre></td></tr></table></figure>
 
-// 假设有一个 curry 函数可以做到柯里化
-var addCurry = curry(add);
-addCurry(1)(2) // 3</code></pre><p>(```)</p>
 <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><hr>
 <p>我们会讲到如何写出这个 curry 函数，并且会将这个 curry 函数写的很强大，但是在编写之前，我们需要知道柯里化到底有什么用？</p>
 <p>举个例子：</p>
