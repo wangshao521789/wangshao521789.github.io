@@ -63,7 +63,8 @@
       
 
       
-        <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>MDN 对闭包的定义为：</p>
+        <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><hr>
+<p>MDN 对闭包的定义为：</p>
 <blockquote>
 <p>闭包是指那些能够访问自由变量的函数。</p>
 </blockquote>
@@ -87,7 +88,8 @@
 <p>ECMAScript中，闭包指的是：</p>
 <pre><code>1. 从理论角度：所有的函数。因为它们都在创建的时候就将上层上下文的数据保存起来了。哪怕是简单的全局变量也是如此，因为函数中访问全局变量就相当于是在访问自由变量，这个时候使用最外层的作用域。
 2. 从实践角度：以下函数才算是闭包：</code></pre><p>即使创建它的上下文已经销毁，它仍然存在（比如，内部函数从父函数中返回）<br>在代码中引用了自由变量<br>接下来就来讲讲实践上的闭包。</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>让我们先写个例子，例子依然是来自《JavaScript权威指南》，稍微做点改动：</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><hr>
+<p>让我们先写个例子，例子依然是来自《JavaScript权威指南》，稍微做点改动：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var scope &#x3D; &quot;global scope&quot;;</span><br><span class="line">function checkscope()&#123;</span><br><span class="line">    var scope &#x3D; &quot;local scope&quot;;</span><br><span class="line">    function f()&#123;</span><br><span class="line">        return scope;</span><br><span class="line">    &#125;</span><br><span class="line">    return f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo &#x3D; checkscope();</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
 
 <p>首先我们要分析一下这段代码中执行上下文栈和执行上下文的变化情况。</p>
@@ -112,7 +114,8 @@
 <p>This combination of a function object and a scope (a set of variable bindings) in which the function’s variables are resolved is called a closure in the computer science literature.</p>
 </blockquote>
 <p>闭包在计算机科学中也只是一个普通的概念，大家不要去想得太复杂。</p>
-<h2 id="必刷题"><a href="#必刷题" class="headerlink" title="必刷题"></a>必刷题</h2><p>接下来，看这道刷题必刷，面试必考的闭包题：</p>
+<h2 id="必刷题"><a href="#必刷题" class="headerlink" title="必刷题"></a>必刷题</h2><hr>
+<p>接下来，看这道刷题必刷，面试必考的闭包题：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var data &#x3D; [];</span><br><span class="line"></span><br><span class="line">for (var i &#x3D; 0; i &lt; 3; i++) &#123;</span><br><span class="line">  data[i] &#x3D; function () &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data[0]();</span><br><span class="line">data[1]();</span><br><span class="line">data[2]();</span><br></pre></td></tr></table></figure>
 
 <p>答案是都是 3，让我们分析一下原因：</p>
