@@ -87,7 +87,9 @@
 <p>别着急，这是理论上的闭包，其实还有一个实践角度上的闭包，让我们看看汤姆大叔翻译的关于闭包的文章中的定义：</p>
 <p>ECMAScript中，闭包指的是：</p>
 <pre><code>1. 从理论角度：所有的函数。因为它们都在创建的时候就将上层上下文的数据保存起来了。哪怕是简单的全局变量也是如此，因为函数中访问全局变量就相当于是在访问自由变量，这个时候使用最外层的作用域。
-2. 从实践角度：以下函数才算是闭包：</code></pre><p>即使创建它的上下文已经销毁，它仍然存在（比如，内部函数从父函数中返回）<br>在代码中引用了自由变量<br>接下来就来讲讲实践上的闭包。</p>
+2. 从实践角度：以下函数才算是闭包：
+    + 即使创建它的上下文已经销毁，它仍然存在（比如，内部函数从父函数中返回）
+    + 在代码中引用了自由变量</code></pre><p>接下来就来讲讲实践上的闭包。</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><hr>
 <p>让我们先写个例子，例子依然是来自《JavaScript权威指南》，稍微做点改动：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var scope &#x3D; &quot;global scope&quot;;</span><br><span class="line">function checkscope()&#123;</span><br><span class="line">    var scope &#x3D; &quot;local scope&quot;;</span><br><span class="line">    function f()&#123;</span><br><span class="line">        return scope;</span><br><span class="line">    &#125;</span><br><span class="line">    return f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo &#x3D; checkscope();</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
@@ -154,6 +156,15 @@
   
     
   <nav class="article-nav">
+    
+      <a href="/2021/06/04/vueSpecial/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            vueSpecial
+          
+        </div>
+      </a>
     
     
       <a href="/2021/06/02/curry/" class="article-nav-link">
