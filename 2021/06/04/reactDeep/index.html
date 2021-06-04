@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    reactDeep |
+    
+    Hexo</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/technology.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <section class="outer">
+  <article id="post-reactDeep" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      reactDeep
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2021/06/04/reactDeep/" class="article-date">
+  <time datetime="2021-06-04T09:49:35.486Z" itemprop="datePublished">2021-06-04</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <h1 id="React-中的元素、组件、实例和节点"><a href="#React-中的元素、组件、实例和节点" class="headerlink" title="React 中的元素、组件、实例和节点"></a>React 中的元素、组件、实例和节点</h1><blockquote>
+<p>React 深入系列，深入讲解了React中的重点概念、特性和模式等，旨在帮助大家加深对React的理解，以及在项目中更加灵活地使用React。</p>
+</blockquote>
+<p>React 中的元素、组件、实例和节点，是React中关系密切的4个概念，也是很容易让React 初学者迷惑的4个概念。现在，老干部就来详细地介绍这4个概念，以及它们之间的联系和区别，满足喜欢咬文嚼字、刨根问底的同学（老干部就是其中一员）的好奇心。</p>
+<h2 id="元素-Element"><a href="#元素-Element" class="headerlink" title="元素 (Element)"></a>元素 (Element)</h2><h3 id="React-元素其实就是一个简单JavaScript对象，一个React-元素和界面上的一部分DOM对应，描述了这部分DOM的结构及渲染效果。一般我们通过JSX语法创建React-元素，例如："><a href="#React-元素其实就是一个简单JavaScript对象，一个React-元素和界面上的一部分DOM对应，描述了这部分DOM的结构及渲染效果。一般我们通过JSX语法创建React-元素，例如：" class="headerlink" title="React 元素其实就是一个简单JavaScript对象，一个React 元素和界面上的一部分DOM对应，描述了这部分DOM的结构及渲染效果。一般我们通过JSX语法创建React 元素，例如："></a>React 元素其实就是一个简单JavaScript对象，一个React 元素和界面上的一部分DOM对应，描述了这部分DOM的结构及渲染效果。一般我们通过JSX语法创建React 元素，例如：</h3><p><code>const element = &lt;h1 className=&#39;greeting&#39;&gt;Hello, world&lt;/h1&gt;;</code></p>
+<p>element是一个React 元素。在编译环节，JSX 语法会被编译成对React.createElement()的调用，从这个函数名上也可以看出，JSX语法返回的是一个React 元素。上面的例子编译后的结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const element &#x3D; React.createElement(</span><br><span class="line">  &#39;h1&#39;,</span><br><span class="line">  &#123;className: &#39;greeting&#39;&#125;,</span><br><span class="line">  &#39;Hello, world!&#39;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>最终，element的值是类似下面的一个简单JavaScript对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const element &#x3D; &#123;</span><br><span class="line">  type: &#39;h1&#39;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    className: &#39;greeting&#39;,</span><br><span class="line">    children: &#39;Hello, world&#39;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>React 元素可以分为两类：DOM类型的元素和组件类型的元素。DOM类型的元素使用像h1、div、p等DOM节点创建React 元素，前面的例子就是一个DOM类型的元素；组件类型的元素使用React 组件创建React 元素，例如：</p>
+<p><code>const buttonElement = &lt;Button color=&#39;red&#39;&gt;OK&lt;/Button&gt;;</code></p>
+<p>buttonElement就是一个组件类型的元素，它的值是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const buttonElement &#x3D; &#123;</span><br><span class="line">  type: &#39;Button&#39;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    color: &#39;red&#39;,</span><br><span class="line">    children: &#39;OK&#39;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于DOM类型的元素，因为和页面的DOM节点直接对应，所以React知道如何进行渲染。但是对于组件类型的元素，如buttonElement，React是无法直接知道应该把buttonElement渲染成哪种结构的页面DOM，这时就需要组件自身提供React能够识别的DOM节点信息，具体实现方式在介绍组件时会详细介绍。</p>
+<p>有了React 元素，我们应该如何使用它呢？其实，绝大多数情况下，我们都不会直接使用React 元素，React 内部会自动根据React 元素，渲染出最终的页面DOM。更确切地说，React元素描述的是React虚拟DOM的结构，React会根据虚拟DOM渲染出页面的真实DOM。</p>
+<h2 id="组件-Component"><a href="#组件-Component" class="headerlink" title="组件 (Component)"></a>组件 (Component)</h2><p>React 组件，应该是大家最熟悉的React中的概念。React通过组件的思想，将界面拆分成一个个可以复用的模块，每一个模块就是一个React 组件。一个React 应用由若干组件组合而成，一个复杂组件也可以由若干简单组件组合而成。</p>
+<p>React组件和React元素关系密切，<strong>React组件最核心的作用是返回React元素</strong>。这里你也许会有疑问：React元素不应该是由React.createElement() 返回的吗？但React.createElement()的调用本身也是需要有“人”负责的，React组件正是这个“责任人”。React组件负责调用React.createElement()，返回React元素，供React内部将其渲染成最终的页面DOM。</p>
+<p>既然组件的核心作用是返回React元素，那么最简单的组件就是一个返回React元素的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Welcome(props) &#123;</span><br><span class="line">  return &lt;h1&gt;Hello, &#123;props.name&#125;&lt;&#x2F;h1&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Welcome是一个用函数定义的组件。如果使用类（class）定义组件，返回React元素的工作具体就由组件的render方法承担，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Welcome extends React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;&#x2F;h1&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实，使用类定义的组件，render方法是唯一必需的方法，其他组件的生命周期方法都只不过是为render服务而已，都不是必需的。</p>
+<p>现在来考虑下面这个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Home extends React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;Welcome name&#x3D;&#39;老干部&#39; &#x2F;&gt;</span><br><span class="line">        &lt;p&gt;Anything you like&lt;&#x2F;p&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Home 组件使用了Welcome组件，返回的React元素为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: &#39;div&#39;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    children: [</span><br><span class="line">      &#123;</span><br><span class="line">        type: &#39;Welcome&#39;,</span><br><span class="line">        props: &#123;</span><br><span class="line">          name: &#39;老干部&#39;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        type: &#39;p&#39;,</span><br><span class="line">        props: &#123;</span><br><span class="line">          children: &#39;Anything you like&#39;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;，</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于这个结构，React 知道如何渲染type = ‘div’ 和 type = ‘p’ 的节点，但不知道如何渲染type=’Welcome’的节点，当React 发现Welcome 是一个React 组件时（判断依据是Welcome首字母为大写），会根据Welcome组件返回的React 元素决定如何渲染Welcome节点。Welcome组件返回的React 元素为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: &#39;h1&#39;,</span><br><span class="line">  props: &#123;</span><br><span class="line">  	children: &#39;Hello, 老干部&#39;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个结构中只包含DOM节点，React是知道如何渲染的。如果这个结构中还包含其他组件节点，React 会重复上面的过程，继续解析对应组件返回的React 元素，直到返回的React 元素中只包含DOM节点为止。这样的递归过程，让React 获取到页面的完整DOM结构信息，渲染的工作自然就水到渠成了。</p>
+<p>另外，如果仔细思考的话，可以发现，<strong>React 组件的复用，本质上是为了复用这个组件返回的React 元素，React 元素是React 应用的最基础组成单位</strong>。</p>
+<h2 id="实例-Instance）"><a href="#实例-Instance）" class="headerlink" title="实例 (Instance）"></a>实例 (Instance）</h2><p>这里的实例特指React组件的实例。React 组件是一个函数或类，实际工作时，发挥作用的是React 组件的实例对象。只有组件实例化后，每一个组件实例才有了自己的props和state，才持有对它的DOM节点和子组件实例的引用。在传统的面向对象的开发方式中，实例化的工作是由开发者自己手动完成的，但在React中，组件的实例化工作是由React自动完成的，组件实例也是直接由React管理的。换句话说，开发者完全不必关心组件实例的创建、更新和销毁。</p>
+<h2 id="节点-Node"><a href="#节点-Node" class="headerlink" title="节点 (Node)"></a>节点 (Node)</h2><p>在使用PropTypes校验组件属性时，有这样一种类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes &#x3D; &#123; </span><br><span class="line">  optionalNode: PropTypes.node,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PropTypes.node又是什么类型呢？这表明optionalNode是一个React 节点。React 节点是指可以被React渲染的数据类型，包括数字、字符串、React 元素，或者是一个包含这些类型数据的数组。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数字类型的节点</span><br><span class="line">function MyComponent(props) &#123;</span><br><span class="line">  return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 字符串类型的节点</span><br><span class="line">function MyComponent(props) &#123;</span><br><span class="line">  return &#39;MyComponent&#39;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; React元素类型的节点</span><br><span class="line">function MyComponent(props) &#123;</span><br><span class="line">  return &lt;div&gt;React Element&lt;&#x2F;div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 数组类型的节点，数组的元素只能是其他合法的React节点</span><br><span class="line">function MyComponent(props) &#123;</span><br><span class="line">  const element &#x3D; &lt;div&gt;React Element&lt;&#x2F;div&gt;;</span><br><span class="line">  const arr &#x3D; [1, &#39;MyComponent&#39;, element];</span><br><span class="line">  return arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 错误，不是合法的React节点</span><br><span class="line">function MyComponent(props) &#123;</span><br><span class="line">  const obj &#x3D; &#123; a : 1&#125;</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后总结一下，React 元素和组件的概念最重要，也最容易混淆；React 组件实例的概念大家了解即可，几乎使用不到；React 节点有一定使用场景，但看过本文后应该也就不存在理解问题了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2021/06/04/reactDeep/" data-id="ckpi5ljl50000hsn131emdcjb"
+         class="article-share-link">分享</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2021/06/04/vueSpecial/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">vueSpecial</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+    </div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/technology.js"></script>
+
+
+  </div>
+</body>
+</html>
